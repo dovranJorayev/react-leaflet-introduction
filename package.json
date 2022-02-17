@@ -1,0 +1,35 @@
+{
+  "name": "react-leaflet-introduction",
+  "version": "1.0.0",
+  "private": false,
+  "dependencies": {
+    "leaflet": "1.5.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-leaflet": "3.0.0",
+    "react-leaflet-google-layer": "2.0.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "@types/react": "16.8.8",
+    "@types/react-dom": "16.8.2",
+    "react-scripts": "^4.0.3",
+    "typescript": "3.3.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
+}
