@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "React Leaflet ",
+  "name": "React Leaflet introduction project",
   "icons": [
     {
       "src": "favicon.ico",

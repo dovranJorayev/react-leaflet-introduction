@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Marker first",
+      "coords": [37.862499, 58.238056]
+    },
+    {
+      "id": 2,
+      "title": "Marker second",
+      "coords": [37.864960, 58.240620]
+    },
+    {
+      "id": 3,
+      "title": "Marker third",
+      "coords": [37.879142, 58.245701]
+    },
+    {
+      "id": 4,
+      "title": "Marker fourth",
+      "coords": [37.889240, 58.228154]
+    },
+    {
+      "id": 5,
+      "title": "Marker fifth",
+      "coords": [37.884747, 58.289217]
+    },
+    {
+      "id": 6,
+      "title": "Marker sixth",
+      "coords": [37.931287, 58.278601]
+    },
+    {
+      "id": 7,
+      "title": "Marker seventh",
+      "coords": [37.921464, 58.221646]
+    }
+  ]
+}
