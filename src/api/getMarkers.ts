@@ -1,5 +1,5 @@
 import { LatLngExpression } from "leaflet";
-import * as getMarkersMock from "assets/mocks/getMarkers.mock.json";
+import getMarkersMock from "assets/mocks/getMarkers.mock.json";
 
 export interface MarkerItem {
   id: number;

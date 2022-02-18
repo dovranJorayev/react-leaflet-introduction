@@ -2,6 +2,7 @@ interface PopupContentProps {
   text: string;
   className?: string;
 }
+
 function PopupContent({className, text}: PopupContentProps): JSX.Element {
   return (
     <div className={className}>

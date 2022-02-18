@@ -16,6 +16,7 @@ import ReactLeafletGoogleLayer from "react-leaflet-google-layer";
 import { useMarkersData } from "./hooks/useMarkersData";
 import { MarkerItem } from "api/getMarkers";
 import PopupContent from "components/PopupContent";
+import LocationPicker from "./components/LocationPicker";
 
 const center: LatLngExpression = [37.862499, 58.238056];
 
@@ -41,12 +42,23 @@ const StyledSpinnerLoader = styled(SpinnerLoader, {label: 'SpinnerLoader'})({
 });
 
 const StyledPopupContent = styled(PopupContent, {label: 'PopupContent'})({
-  width: '70px',
-  height: '40px',
-  backgroundColor: '#141414',
+  minWidth: '50px',
+  minHeight: '17px',
   '& [data-popup-content="popup-text"]': {
-    color: 'white',
-    fontSize: 13
+    color: '#141414',
+    fontSize: 12
+  }
+});
+
+const StyledPopup = styled(Popup, {label: 'Popup'})({
+  '& .leaflet-popup-content': {
+    margin: '5px'
+  },
+  '& .leaflet-popup': {
+    marginBottom: '45px'
+  },
+  '& .leaflet-popup-close-button': {
+    display: 'none'
   }
 });
 
@@ -68,13 +80,6 @@ function MultiLayerMapPage(): JSX.Element {
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-        </LayersControl.BaseLayer>
-
-        <LayersControl.BaseLayer name="OpenStreetMap.BlackAndWhite">
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png"
           />
         </LayersControl.BaseLayer>
 
@@ -124,12 +129,19 @@ function MultiLayerMapPage(): JSX.Element {
       }
 
       {
-        activeMarker && <Popup>
+        activeMarker && <StyledPopup
+          position={activeMarker.coords}
+          onClose={() => {
+            setActiveMarker(null);
+          }}
+        >
           <StyledPopupContent
             text={activeMarker.title}
           />
-        </Popup>
+        </StyledPopup>
       }
+
+      <LocationPicker/>
     </StyledMapContainer>
   );
 }

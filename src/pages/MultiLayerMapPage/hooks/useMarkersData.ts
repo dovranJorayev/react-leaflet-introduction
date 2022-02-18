@@ -1,10 +1,10 @@
-import { getMarkers, Marker } from 'api/getMarkers';
+import { getMarkers, MarkerItem } from 'api/getMarkers';
 import React from 'react';
 
 interface MarkersData {
   isError: boolean;
   isLoading: boolean;
-  data?: Marker[];
+  data?: MarkerItem[];
   error?: Error;
 }
 export const useMarkersData = () => {
