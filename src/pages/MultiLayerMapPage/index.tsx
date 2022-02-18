@@ -1,22 +1,26 @@
 import styled from "@emotion/styled";
 import React from 'react';
 import SpinnerLoader from "components/SpinnerLoader";
-import { LatLngExpression } from "leaflet";
+import { Icon, LatLngExpression } from "leaflet";
 import {
   MapContainer,
   LayersControl,
   TileLayer,
   Marker,
-  Popup,
-  LayerGroup,
-  Circle,
-  FeatureGroup
+  Popup
 } from "react-leaflet";
 import ReactLeafletGoogleLayer from "react-leaflet-google-layer";
 import { useMarkersData } from "./hooks/useMarkersData";
 import { MarkerItem } from "api/getMarkers";
 import PopupContent from "components/PopupContent";
 import LocationPicker from "./components/LocationPicker";
+import pickedMarkerIconUrl from 'assets/icons/location-pin-primary.svg';
+import LocationsStatus from "./components/LocationsStatus";
+
+const pickedMarker = new Icon({
+  iconSize: [40, 40],
+  iconUrl: pickedMarkerIconUrl
+});
 
 const center: LatLngExpression = [37.862499, 58.238056];
 
@@ -63,6 +67,7 @@ const StyledPopup = styled(Popup, {label: 'Popup'})({
 });
 
 function MultiLayerMapPage(): JSX.Element {
+  const [position, setPosition] = React.useState<LatLngExpression|null>(null);
   const [activeMarker, setActiveMarker] = React.useState<MarkerItem | null>(null);
   const { isLoading: isMarkersLoading, data: markers } = useMarkersData();
 
@@ -76,47 +81,24 @@ function MultiLayerMapPage(): JSX.Element {
       center={center}
     >
       <LayersControl position="topright">
-        <LayersControl.BaseLayer checked name="OpenStreetMap.Mapnik">
+        <LayersControl.BaseLayer checked name="Road mode">
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
         </LayersControl.BaseLayer>
 
-        <LayersControl.BaseLayer name="Google">
+        <LayersControl.BaseLayer name="Sattelite hybrid mode">
           <ReactLeafletGoogleLayer type={"hybrid"} />
         </LayersControl.BaseLayer>
-
-        <LayersControl.Overlay name="Marker with popup">
-          <Marker position={center}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
-        </LayersControl.Overlay>
-
-        <LayersControl.Overlay checked name="Layer group with circles">
-          <LayerGroup>
-            <Circle
-              center={center}
-              pathOptions={{ fillColor: "blue" }}
-              radius={50}
-            />
-          </LayerGroup>
-        </LayersControl.Overlay>
-
-        <LayersControl.Overlay name="Feature group">
-          <FeatureGroup pathOptions={{ color: "purple" }}>
-            <Popup>Popup in FeatureGroup</Popup>
-            <Circle center={[51.51, -0.06]} radius={200} />
-          </FeatureGroup>
-        </LayersControl.Overlay>
-    
       </LayersControl>
+
+      <LocationsStatus/>
 
       {
         markers && markers.map( marker => (
           <Marker 
+            icon={pickedMarker}
             key={marker.id}
             position={marker.coords}
             eventHandlers={{
@@ -141,7 +123,10 @@ function MultiLayerMapPage(): JSX.Element {
         </StyledPopup>
       }
 
-      <LocationPicker/>
+      <LocationPicker
+        position={position}
+        onPositionChange={setPosition}
+      />
     </StyledMapContainer>
   );
 }
