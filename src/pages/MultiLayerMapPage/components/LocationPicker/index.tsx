@@ -1,25 +1,24 @@
 import { Icon, LatLngExpression } from 'leaflet';
-import React from 'react';
 import { Marker, Popup, useMapEvents } from 'react-leaflet';
-import pickedMarkerIconUrl from 'assets/icons/loaction-pin-clear.svg';
+import pickedMarkerIconUrl from 'assets/icons/location-pin-success.svg';
+
+interface LocationPickerProps {
+  position: LatLngExpression|null;
+  onPositionChange: (position: LatLngExpression) => void;
+}
 
 const pickedMarker = new Icon({
-  iconSize: [35, 35],
+  iconSize: [40, 40],
   iconUrl: pickedMarkerIconUrl
 });
 
-function LocationPicker(): JSX.Element | null {
-  const [position, setPosition] = React.useState<LatLngExpression|null>(null);
+function LocationPicker({ position, onPositionChange }: LocationPickerProps): JSX.Element | null {
   const map = useMapEvents({
     click(e) {
-      setPosition(e.latlng);
+      onPositionChange(e.latlng);
       map.flyTo(e.latlng, map.getZoom());
     }
   });
-
-  React.useEffect(() => {
-    console.log('Map position is: ', position);
-  }, [position]);
 
   return position === null ? null : (
     <Marker 
