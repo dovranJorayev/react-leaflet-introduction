@@ -18,6 +18,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "removeComments": true,
+    "jsxImportSource": "@emotion/react",
     "baseUrl": "src",
     "typeRoots": [
       "node_modules/@types",
