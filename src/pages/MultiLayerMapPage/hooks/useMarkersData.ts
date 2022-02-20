@@ -34,5 +34,15 @@ export const useMarkersData = () => {
     callGetMarkers();
   }, []);
 
-  return markersData;
+  const mutateMarkers = (data: MarkerItem[]) => {
+    setMarkersData(prev => ({
+      ...prev,
+      data
+    }));
+  };
+
+  return {
+    ...markersData,
+    mutateMarkers
+  };
 };
