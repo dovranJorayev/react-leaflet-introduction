@@ -67,9 +67,24 @@ const StyledPopup = styled(Popup, {label: 'Popup'})({
 });
 
 function MultiLayerMapPage(): JSX.Element {
-  const [position, setPosition] = React.useState<LatLngExpression|null>(null);
+  const [position, setPosition] = React.useState<LatLngExpression | null>(null);
   const [activeMarker, setActiveMarker] = React.useState<MarkerItem | null>(null);
-  const { isLoading: isMarkersLoading, data: markers } = useMarkersData();
+  const { isLoading: isMarkersLoading, data: markers, mutateMarkers } = useMarkersData();
+
+  const addMarker = (marker: MarkerItem): void => {
+    mutateMarkers([
+      ...(markers || []),
+      marker
+    ]);
+  };
+
+  const deleteMarker = (marker: MarkerItem): void => {
+    mutateMarkers(
+      (markers || []).filter(
+        item => item.id !== marker.id
+      )
+    );
+  };
 
   if(isMarkersLoading) {
     return <StyledSpinnerLoader/>;
@@ -93,7 +108,12 @@ function MultiLayerMapPage(): JSX.Element {
         </LayersControl.BaseLayer>
       </LayersControl>
 
-      <LocationsStatus/>
+      <LocationsStatus
+        currentPosition={position}
+        markers={markers ?? []}
+        addMarker={addMarker}
+        deleteMarker={deleteMarker}
+      />
 
       {
         markers && markers.map( marker => (
