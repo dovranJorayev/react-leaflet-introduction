@@ -13,10 +13,9 @@ const pickedMarker = new Icon({
 });
 
 function LocationPicker({ position, onPositionChange }: LocationPickerProps): JSX.Element | null {
-  const map = useMapEvents({
+  useMapEvents({
     click(e) {
       onPositionChange(e.latlng);
-      map.flyTo(e.latlng, map.getZoom());
     }
   });
 
